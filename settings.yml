@@ -1,8 +1,8 @@
 use_default_settings: true
 
 general:
-  instance_name: "My SearXNG"
-  contact_url: "mailto:your-email@example.com" # Fixes Wikipedia, Wikidata, OSM errors
+  instance_name: "SearXNG-Vulture"
+  contact_url: "mailto:creek1216mills@icloud.com" # Fixes Wikipedia, Wikidata, OSM errors
 
 search:
   safe_search: 0
