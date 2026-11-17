@@ -1,0 +1,6 @@
+[botdetection]
+trusted_proxies = ["127.0.0.1/8", "::1/128"]
+
+[botdetection.ip_limit]
+filter_link_local = false
+link_token = false
