@@ -12,8 +12,7 @@
 
     # Forward traffic to SearXNG on port 8888
     reverse_proxy 127.0.0.1:8888 {
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Real-IP {remote_host}
+        header_up X-Real-IP {http.request.header.X-Forwarded-For}
         header_up X-Forwarded-Proto {scheme}
     }
 }
