@@ -1,8 +1,8 @@
 use_default_settings: true
 
 general:
-  instance_name: "SearXNG-Vulture"
-  contact_url: "mailto:creek1216mills@icloud.com" # Fixes Wikipedia, Wikidata, OSM errors
+  instance_name: "SearXNGFW"
+  contact_url: "mailto:creek1216mills@icloud.com"
 
 search:
   safe_search: 0
@@ -10,9 +10,11 @@ search:
   default_lang: "en"
   formats:
     - html
-    - json # Required to feed data into a widget
+    - json
 
 server:
-  secret_key: "deeznutz7754638143786489367263787669436679"
-  limiter: false # Prevents botdetection from blocking your widget without X-Forwarded-For
+  port: 8888
+  bind_address: "127.0.0.1"
+  secret_key: "deeznutz76848643267763246783686433247865687354"
+  limiter: false
   public_instance: false
