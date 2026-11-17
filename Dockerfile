@@ -1,7 +1,7 @@
 FROM searxng/searxng:latest
 
-# Install Caddy
-RUN apk add --no-cache caddy
+# Copy pre-built Caddy binary directly from the official Caddy image
+COPY --from=caddy:alpine /usr/bin/caddy /usr/bin/caddy
 
 # Copy your custom SearXNG settings and Caddy config
 COPY settings.yml /etc/searxng/settings.yml
