@@ -1,12 +1,19 @@
-:{$PORT:8080} {
-    header {
-        Access-Control-Allow-Origin *
-        Access-Control-Allow-Methods "GET, OPTIONS"
-        Access-Control-Allow-Headers "*"
-    }
-
+:8080 {
+    # Handle preflight browser requests for widgets
     @options method OPTIONS
     respond @options 204
 
-    reverse_proxy 127.0.0.1:8888
+    # Allow any widget/frontend to read the JSON results
+    header {
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type"
+    }
+
+    # Forward traffic to SearXNG on port 8888
+    reverse_proxy 127.0.0.1:8888 {
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
 }
