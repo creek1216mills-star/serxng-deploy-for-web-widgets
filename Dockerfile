@@ -9,4 +9,4 @@ COPY limiter.toml /etc/searxng/limiter.toml
 EXPOSE 8080
 
 ENTRYPOINT []
-CMD ["/bin/sh", "-c", "/usr/local/searxng/entrypoint.sh & caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
+CMD ["/bin/sh", "-c", "SEARXNG_PORT=8888 SEARXNG_BIND_ADDRESS=127.0.0.1 PORT=8888 /usr/local/searxng/entrypoint.sh & caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
