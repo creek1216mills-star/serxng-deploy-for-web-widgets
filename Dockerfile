@@ -1,19 +1,12 @@
 FROM searxng/searxng:latest
 
-# Switch to root to set permissions
-USER root
+# Install Caddy
+RUN apk add --no-cache caddy
 
-# Copy custom settings
+# Copy your custom SearXNG settings and Caddy config
 COPY settings.yml /etc/searxng/settings.yml
+COPY Caddyfile /etc/caddy/Caddyfile
 
-# Fix ownership and permissions
-RUN chown -R searxng:searxng /etc/searxng
-
-# Switch back to searxng user
-USER searxng
-
-# Expose port
-EXPOSE 8080
-
-# Start SearXNG
-CMD ["/usr/local/searxng/dockerfiles/docker-entrypoint.sh"]
+# Run SearXNG internally on port 8888, while Caddy listens on Render's $PORT
+ENV SEARXNG_BIND_ADDRESS=127.0.0.1:8888
+CMD sh -c "caddy start --config /etc/caddy/Caddyfile && exec /usr/local/searxng/dockerfiles/docker-entrypoint.sh"
