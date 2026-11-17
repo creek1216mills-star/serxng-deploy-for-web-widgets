@@ -1,12 +1,14 @@
-FROM searxng/searxng:latest
+FROM docker.io/library/caddy:alpine AS caddy
+FROM docker.io/searxng/searxng:latest
 
-# Copy pre-built Caddy binary directly from the official Caddy image
-COPY --from=caddy:alpine /usr/bin/caddy /usr/bin/caddy
-
-# Copy your custom SearXNG settings and Caddy config
-COPY settings.yml /etc/searxng/settings.yml
+# Copy Caddy binary and config files
+COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/caddy/Caddyfile
+COPY settings.yml /etc/searxng/settings.yml
 
-# Run SearXNG internally on port 8888, while Caddy listens on Render's $PORT
-ENV SEARXNG_BIND_ADDRESS=127.0.0.1:8888
-CMD sh -c "caddy start --config /etc/caddy/Caddyfile && exec /usr/local/searxng/dockerfiles/docker-entrypoint.sh"
+# Expose port 8080 for Render
+EXPOSE 8080
+
+# Override SearXNG's default entrypoint and start both processes
+ENTRYPOINT []
+CMD ["/bin/sh", "-c", "/usr/local/searxng/entrypoint.sh & caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
