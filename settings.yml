@@ -1,10 +1,18 @@
 use_default_settings: true
 
-server:
-  secret_key: "deeznuts2767764372756234576234576346"
-  limiter: false
+general:
+  instance_name: "My SearXNG"
+  contact_url: "mailto:your-email@example.com" # Fixes Wikipedia, Wikidata, OSM errors
 
 search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "en"
   formats:
     - html
-    - json
+    - json # Required to feed data into a widget
+
+server:
+  secret_key: "deeznutz7754638143786489367263787669436679"
+  limiter: false # Prevents botdetection from blocking your widget without X-Forwarded-For
+  public_instance: false
